@@ -45,7 +45,7 @@ class StaticBuildTests(unittest.TestCase):
         self.assertTrue((self.output / "js" / "app.js").is_file())
         self.assertTrue((self.output / "data" / "dashboard.json").is_file())
         self.assertIn('href="css/site.css"', self.html)
-        self.assertIn('src="js/app.js"', self.html)
+        self.assertIn('<script type="module" src="js/app.js"></script>', self.html)
 
     def test_markup_ids_are_unique_and_local_asset_links_resolve(self):
         parser = MarkupInventory()
@@ -103,9 +103,11 @@ class StaticBuildTests(unittest.TestCase):
         self.assertIn("runtime: static", blueprint)
         self.assertIn("name: agric-kenya-python-staging", blueprint)
         self.assertIn("branch: arena/5dd54068-agric-kenya", blueprint)
-        self.assertIn("rootDir: static-site", blueprint)
-        self.assertIn("python3.11 -m pip install -r requirements.txt", blueprint)
+        self.assertIn("buildCommand: npm ci && ./node_modules/.bin/vite build", blueprint)
+        self.assertNotIn("rootDir:", blueprint)
         self.assertIn("staticPublishPath: dist", blueprint)
+        self.assertIn("key: PYTHON_VERSION", blueprint)
+        self.assertIn("value: 3.11.18", blueprint)
         self.assertNotIn("name: Agric-Kenya", blueprint)
         self.assertNotIn("agric-kenya.onrender.com", blueprint)
 
