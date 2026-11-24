@@ -1,0 +1,12 @@
+# Standalone Render Blueprint for a NEW staging Static Site only.
+# Select this file path during Blueprint setup; it is not the production service config.
+services:
+  - type: web
+    name: agric-kenya-python-staging
+    runtime: static
+    repo: https://github.com/kennedy-blip/Agric-Kenya
+    branch: arena/5dd54068-agric-kenya
+    rootDir: static-site
+    buildCommand: python3.11 -m pip install -r requirements.txt && python3.11 build.py
+    staticPublishPath: dist
+    autoDeployTrigger: commit

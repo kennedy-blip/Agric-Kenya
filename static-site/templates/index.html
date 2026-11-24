@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Climate-smart agriculture and crop-yield insights for Kenya.">
+  <meta name="theme-color" content="#15803d">
+  <title>{{ dashboard.title }} - Climate &amp; Agriculture Yield Prediction</title>
+  <link rel="stylesheet" href="css/site.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="./" aria-label="Kenya AgriPredict home"><span class="brand-icon">🌿</span><span><strong>Kenya AgriPredict</strong><small>Climate-Smart Agriculture for Kenya 🇰🇪</small></span></a>
+      <div class="filters" aria-label="Dashboard filters">
+        <label><span class="sr-only">County</span><select id="county-select" aria-label="Select county">{% for county in dashboard.counties %}<option value="{{ county.id }}" {% if county.id == 'nakuru' %}selected{% endif %}>{{ county.name }} County</option>{% endfor %}</select></label>
+        <label><span class="sr-only">Crop</span><select id="crop-select" aria-label="Select crop">{% for crop in dashboard.crops %}<option value="{{ crop.id }}" {% if crop.id == 'maize' %}selected{% endif %}>{{ crop.icon }} {{ crop.name }}</option>{% endfor %}</select></label>
+        <label><span class="sr-only">Year</span><select id="year-select" aria-label="Select year">{% for year in dashboard.years %}<option value="{{ year }}" {% if year == '2026' %}selected{% endif %}>{{ year }}{% if year == '2026' %} (Current){% endif %}</option>{% endfor %}</select></label>
+      </div>
+    </div>
+  </header>
+  <main class="container">
+    <section class="stats-grid" aria-label="Platform statistics">
+      {% for stat in dashboard.stats %}<article class="card stat-card"><div><p>{{ stat.label }}</p><strong>{{ stat.value }}</strong><small>{{ stat.subtext }}</small></div><span class="stat-icon" aria-hidden="true">{{ stat.icon }}</span></article>{% endfor %}
+    </section>
+    <section class="summary-grid" aria-label="Selected year and county summary">
+      <article class="year-card"><div class="year-top"><span>Selected Year</span><span id="year-badge" class="badge live">Current</span></div><strong id="summary-year">2026</strong><dl><div><dt>Yield Index</dt><dd id="summary-yield">+5%</dd></div><div><dt>Rainfall</dt><dd id="summary-rain">+5%</dd></div><div><dt>Data Status</dt><dd id="summary-status">Current snapshot</dd></div></dl></article>
+      <article class="county-card"><div><span class="pin" aria-hidden="true">⌖</span><h1 id="county-title">Nakuru County</h1><p id="county-meta">Rift Valley Region · 🌽 Maize (Mahindi) · 2026</p></div><div class="weather-stats"><div><span>🌡</span><strong id="temperature">24°C</strong><small>Avg Temp</small></div><div><span>💧</span><strong id="monthly-rain">89mm</strong><small>Monthly Rain</small></div><div><span>☀</span><strong>7.2h</strong><small>Sunlight/Day</small></div></div></article>
+    </section>
+    <section class="content-grid feature-grid">
+      <article class="card field-card"><div class="section-heading"><div><h2 id="field-title">Satellite Field Health - Nakuru</h2><p>NDVI Analysis from Sentinel-2 · <span class="year-inline">2026</span></p></div><span id="satellite-state" class="pill live"><i></i>Snapshot</span></div><div class="field-map" id="field-grid" role="img" aria-label="Field health grid with 100 cells"></div><div class="field-average"><small>Average Field Health</small><strong id="field-average">83.5%</strong></div><div class="legend"><span><i class="poor"></i>Poor (&lt;70%)</span><span><i class="fair"></i>Fair (70-80%)</span><span><i class="good"></i>Good (&gt;80%)</span></div></article>
+      <article class="card alerts-card"><div class="section-heading"><div><h2>Kenya Agricultural Alerts</h2><p>County and crop updates</p></div><span id="alerts-state" class="pill live">Snapshot</span></div><ul id="alerts-list" class="alerts-list"></ul></article>
+    </section>
+    <section class="content-grid two-col">
+      <article class="card chart-card"><div class="section-heading"><div><h2>Weather Patterns &amp; Yield Index - <span class="year-inline">2026</span></h2><p>Kenya Meteorological Department Data <span id="weather-live" class="green-text">(Static sample data)</span></p></div></div><div class="chart-legend"><span><i class="rain-key"></i>Rainfall (mm)</span><span><i class="temp-key"></i>Temperature (°C)</span><span><i class="yield-key"></i>Yield Index (%)</span></div><div id="weather-chart" class="chart" aria-label="Monthly weather chart"></div></article>
+      <article class="card chart-card"><div class="section-heading"><div><h2>County Yield Comparison - <span class="year-inline">2026</span></h2><p>Bags per Hectare by County <span id="yield-history" class="muted"></span></p></div></div><div class="chart-legend"><span><i class="maize-key"></i>Maize</span><span><i class="potato-key"></i>Potatoes</span><span><i class="wheat-key"></i>Wheat</span></div><div id="county-chart" class="chart tall-chart" aria-label="Yield by county"></div></article>
+    </section>
+    <section class="content-grid three-col">
+      <article class="card chart-card"><h2>Kenya Crop Distribution</h2><p>% of Agricultural Land</p><div id="crop-chart" class="chart donut-chart" aria-label="Crop distribution chart"></div><div id="crop-legend" class="compact-legend"></div></article>
+      <article class="card chart-card"><h2>Growing Conditions</h2><p id="radar-county">Nakuru County</p><div class="condition-list">{% for condition in dashboard.radar %}<div><span>{{ condition.metric }}</span><span class="meter"><i style="width:{{ condition.current }}%"></i><b style="left:{{ condition.optimal }}%"></b></span><b>{{ condition.current }} / {{ condition.optimal }}</b></div>{% endfor %}</div><div class="note"><span class="condition-key"></span> Current · <span class="target-key"></span> Optimal target</div></article>
+      <article class="card chart-card"><h2>Yield Trends (Tonnes/Ha)</h2><p>2022-2026 Performance</p><div id="trend-chart" class="chart"></div><div class="chart-legend trend-legend"><span><i class="maize-key"></i>Maize</span><span><i class="wheat-key"></i>Wheat</span><span><i class="yield-key"></i>Tea</span><span><i class="potato-key"></i>Coffee</span></div></article>
+    </section>
+    <section class="content-grid two-col">
+      <article class="card chart-card"><div class="section-heading"><div><h2>Soil Sensor Network - <span class="year-inline">2026</span></h2><p>NPK Analysis by Depth - <span class="county-inline">Nakuru</span></p></div></div><div class="chart-legend"><span><i class="moisture-key"></i>Moisture</span><span><i class="nitrogen-key"></i>Nitrogen</span><span><i class="phosphorus-key"></i>Phosphorus</span><span><i class="potassium-key"></i>Potassium</span></div><div id="soil-chart" class="chart"></div></article>
+      <article class="card model-card"><h2>ML Model Performance</h2><p>Yield Prediction Accuracy</p><div class="model-list">{% for model in dashboard.models %}<div class="model-row"><div><strong>{{ model.model }}</strong><small>({{ model.crop }})</small><b>{{ model.accuracy }}%</b></div><p>MAE: {{ model.mae }} <span>RMSE: {{ model.rmse }}</span></p><div class="progress"><i style="width:{{ model.accuracy }}%"></i></div></div>{% endfor %}</div></article>
+    </section>
+    <section class="card pipeline-card"><div class="section-heading"><div><h2>Distributed Processing Pipeline</h2><p>Terabytes of geospatial data from Kenya's 47 counties</p></div><span class="system-active"><i></i>Sample pipeline</span></div><div class="pipeline-grid"><article><span>▤</span><h3>Data Ingestion</h3><p>8,500 records/sec</p><small>KMD, Sentinel-2, Landsat</small></article><article><span>⌘</span><h3>ML Processing</h3><p>425 compute nodes</p><small>Random Forest, CNN, XGBoost</small></article><article><span>↗</span><h3>Prediction Output</h3><p>96.5% accuracy</p><small>County-level forecasts</small></article><article><span>♧</span><h3>Farmer Delivery</h3><p>850K+ farmers</p><small>SMS, USSD, Mobile App</small></article></div></section>
+    <section class="card crops-card"><h2>Kenya Major Crops Overview</h2><div class="crop-buttons">{% for crop in dashboard.crops[:8] %}<button type="button" data-crop="{{ crop.id }}" class="crop-button {% if crop.id == 'maize' %}selected{% endif %}"><span>{{ crop.icon }}</span><small>{{ crop.name.split(' ')[0] }}</small></button>{% endfor %}</div></section>
+    <footer><p>Kenya AgriPredict © 2026 · Empowering Farmers with Climate-Smart Agriculture</p><p>Data Sources: Kenya Meteorological Department · Sentinel-2 · KALRO · County Governments</p><p class="disclaimer">Dashboard figures are illustrative sample data reproduced from the existing application; they are not verified live measurements.</p></footer>
+  </main>
+</body>
+</html>
