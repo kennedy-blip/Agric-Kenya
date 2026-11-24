@@ -6,7 +6,9 @@ services:
     runtime: static
     repo: https://github.com/kennedy-blip/Agric-Kenya
     branch: arena/5dd54068-agric-kenya
-    rootDir: static-site
-    buildCommand: python3.11 -m pip install -r requirements.txt && python3.11 build.py
+    buildCommand: npm ci && ./node_modules/.bin/vite build
     staticPublishPath: dist
     autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.18

@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from html.parser import HTMLParser
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
@@ -20,6 +21,20 @@ REQUIRED_MARKERS = (
     "County Yield Comparison",
     "ML Model Performance",
 )
+
+
+class AssetLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.stylesheets: list[str] = []
+        self.scripts: list[str] = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag == "link" and "stylesheet" in attrs.get("rel", "").split() and attrs.get("href"):
+            self.stylesheets.append(attrs["href"])
+        if tag == "script" and attrs.get("src"):
+            self.scripts.append(attrs["src"])
 
 
 def fetch(base: str, path: str) -> tuple[bytes, str]:
@@ -40,21 +55,25 @@ def verify(base_url: str) -> list[str]:
         raise ValueError("Refusing to certify the production URL as staging")
 
     html, html_type = fetch(base_url, "")
-    css, css_type = fetch(base_url, "css/site.css")
-    js, js_type = fetch(base_url, "js/app.js")
     raw_data, data_type = fetch(base_url, "data/dashboard.json")
     html_text = html.decode("utf-8")
-    css_text = css.decode("utf-8")
-    js_text = js.decode("utf-8")
     data = json.loads(raw_data)
 
     missing = [marker for marker in REQUIRED_MARKERS if marker not in html_text]
     if missing:
         raise RuntimeError("Page is missing required dashboard markers: " + ", ".join(missing))
+    links = AssetLinks()
+    links.feed(html_text)
+    if not links.stylesheets or not links.scripts:
+        raise RuntimeError("Page is missing its dashboard stylesheet or script")
+    css_assets = [(url, *fetch(base_url, url)) for url in links.stylesheets]
+    js_assets = [(url, *fetch(base_url, url)) for url in links.scripts]
+    css_text = "\\n".join(content.decode("utf-8") for _, content, _ in css_assets)
+    js_text = "\\n".join(content.decode("utf-8") for _, content, _ in js_assets)
     if ".stats-grid" not in css_text or "@media" not in css_text:
         raise RuntimeError("Stylesheet does not appear to be the responsive dashboard stylesheet")
-    if "renderWeather" not in js_text or "fetch('data/dashboard.json')" not in js_text:
-        raise RuntimeError("JavaScript asset is missing the dashboard renderer/data load")
+    if "dashboard.json" not in js_text or "county-select" not in js_text:
+        raise RuntimeError("JavaScript asset is missing dashboard data loading or controls")
     if len(data.get("counties", [])) != 18 or len(data.get("crops", [])) != 16:
         raise RuntimeError("Static JSON county/crop data is incomplete")
     years = set(data.get("years", []))
@@ -66,13 +85,17 @@ def verify(base_url: str) -> list[str]:
         raise RuntimeError("Crop distribution must total 100 percent")
     if "json" not in data_type.lower():
         raise RuntimeError(f"Dashboard data has an unexpected content type: {data_type}")
-    if "html" not in html_type.lower() or "css" not in css_type.lower() or "javascript" not in js_type.lower():
-        raise RuntimeError("One or more assets have unexpected content types")
+    if "html" not in html_type.lower():
+        raise RuntimeError(f"Page has an unexpected content type: {html_type}")
+    if any("css" not in content_type.lower() for _, _, content_type in css_assets):
+        raise RuntimeError("One or more stylesheets have an unexpected content type")
+    if any("javascript" not in content_type.lower() for _, _, content_type in js_assets):
+        raise RuntimeError("One or more scripts have an unexpected content type")
 
     return [
         f"HTML: 200 ({html_type.split(';')[0]})",
-        f"CSS: 200 ({css_type.split(';')[0]})",
-        f"JavaScript: 200 ({js_type.split(';')[0]})",
+        f"CSS assets: 200 ({len(css_assets)})",
+        f"JavaScript assets: 200 ({len(js_assets)})",
         f"Dashboard JSON: 200 ({len(data['counties'])} counties, {len(data['crops'])} crops, {len(years)} years)",
         "Dashboard section markers and static data integrity: passed",
     ]
