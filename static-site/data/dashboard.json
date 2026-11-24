@@ -1,0 +1,156 @@
+{
+  "title": "Kenya AgriPredict 2026",
+  "description": "Climate and agriculture yield insights for Kenya",
+  "years": ["2026", "2025", "2024", "2023", "2022"],
+  "multipliers": {
+    "2022": {"yield": 0.85, "rainfall": 0.9, "temp": 0.98},
+    "2023": {"yield": 0.92, "rainfall": 0.95, "temp": 0.99},
+    "2024": {"yield": 0.96, "rainfall": 1.02, "temp": 1.0},
+    "2025": {"yield": 1.0, "rainfall": 0.98, "temp": 1.01},
+    "2026": {"yield": 1.05, "rainfall": 1.05, "temp": 1.02}
+  },
+  "yearSummary": {
+    "2022": {"yield": "-15%", "rainfall": "-10%"},
+    "2023": {"yield": "-8%", "rainfall": "-5%"},
+    "2024": {"yield": "-4%", "rainfall": "+2%"},
+    "2025": {"yield": "+0%", "rainfall": "-2%"},
+    "2026": {"yield": "+5%", "rainfall": "+5%"}
+  },
+  "counties": [
+    {"id":"nakuru","name":"Nakuru","region":"Rift Valley"},
+    {"id":"uasin-gishu","name":"Uasin Gishu","region":"Rift Valley"},
+    {"id":"trans-nzoia","name":"Trans Nzoia","region":"Rift Valley"},
+    {"id":"nyandarua","name":"Nyandarua","region":"Central"},
+    {"id":"kiambu","name":"Kiambu","region":"Central"},
+    {"id":"meru","name":"Meru","region":"Eastern"},
+    {"id":"machakos","name":"Machakos","region":"Eastern"},
+    {"id":"kakamega","name":"Kakamega","region":"Western"},
+    {"id":"bungoma","name":"Bungoma","region":"Western"},
+    {"id":"kisumu","name":"Kisumu","region":"Nyanza"},
+    {"id":"nyeri","name":"Nyeri","region":"Central"},
+    {"id":"kirinyaga","name":"Kirinyaga","region":"Central"},
+    {"id":"embu","name":"Embu","region":"Eastern"},
+    {"id":"laikipia","name":"Laikipia","region":"Rift Valley"},
+    {"id":"narok","name":"Narok","region":"Rift Valley"},
+    {"id":"kericho","name":"Kericho","region":"Rift Valley"},
+    {"id":"bomet","name":"Bomet","region":"Rift Valley"},
+    {"id":"taita-taveta","name":"Taita Taveta","region":"Coast"}
+  ],
+  "crops": [
+    {"id":"maize","name":"Maize (Mahindi)","icon":"🌽","color":"#fbbf24"},
+    {"id":"tea","name":"Tea (Chai)","icon":"🍵","color":"#22c55e"},
+    {"id":"coffee","name":"Coffee (Kahawa)","icon":"☕","color":"#8b5cf6"},
+    {"id":"wheat","name":"Wheat (Ngano)","icon":"🌾","color":"#f59e0b"},
+    {"id":"sugarcane","name":"Sugarcane (Miwa)","icon":"🎋","color":"#10b981"},
+    {"id":"beans","name":"Beans (Maharagwe)","icon":"🫘","color":"#ef4444"},
+    {"id":"potatoes","name":"Potatoes (Viazi)","icon":"🥔","color":"#a855f7"},
+    {"id":"rice","name":"Rice (Mchele)","icon":"🍚","color":"#06b6d4"},
+    {"id":"sorghum","name":"Sorghum (Mtama)","icon":"🌿","color":"#f97316"},
+    {"id":"millet","name":"Millet (Wimbi)","icon":"🌾","color":"#84cc16"},
+    {"id":"cassava","name":"Cassava (Muhogo)","icon":"🌿","color":"#ec4899"},
+    {"id":"bananas","name":"Bananas (Ndizi)","icon":"🍌","color":"#eab308"},
+    {"id":"avocado","name":"Avocado (Parachichi)","icon":"🥑","color":"#65a30d"},
+    {"id":"mangoes","name":"Mangoes (Maembe)","icon":"🥭","color":"#fb923c"},
+    {"id":"tomatoes","name":"Tomatoes (Nyanya)","icon":"🍅","color":"#dc2626"},
+    {"id":"onions","name":"Onions (Vitunguu)","icon":"🧅","color":"#c084fc"}
+  ],
+  "countyYield": [
+    {"county":"Trans Nzoia","maize":32,"wheat":28,"tea":0,"coffee":5,"potatoes":18,"beans":22},
+    {"county":"Uasin Gishu","maize":28,"wheat":35,"tea":0,"coffee":3,"potatoes":15,"beans":20},
+    {"county":"Nakuru","maize":25,"wheat":22,"tea":8,"coffee":12,"potatoes":30,"beans":18},
+    {"county":"Nyandarua","maize":18,"wheat":15,"tea":5,"coffee":8,"potatoes":45,"beans":25},
+    {"county":"Kericho","maize":12,"wheat":5,"tea":48,"coffee":2,"potatoes":8,"beans":15},
+    {"county":"Meru","maize":20,"wheat":8,"tea":22,"coffee":35,"potatoes":25,"beans":28},
+    {"county":"Kiambu","maize":15,"wheat":5,"tea":18,"coffee":42,"potatoes":20,"beans":22},
+    {"county":"Kakamega","maize":30,"wheat":2,"tea":5,"coffee":3,"potatoes":8,"beans":35}
+  ],
+  "weather": [
+    {"month":"Jan","temperature":24,"rainfall":45,"humidity":58,"yieldIndex":72},
+    {"month":"Feb","temperature":25,"rainfall":38,"humidity":55,"yieldIndex":70},
+    {"month":"Mar","temperature":26,"rainfall":85,"humidity":68,"yieldIndex":78},
+    {"month":"Apr","temperature":24,"rainfall":165,"humidity":78,"yieldIndex":88},
+    {"month":"May","temperature":23,"rainfall":145,"humidity":75,"yieldIndex":92},
+    {"month":"Jun","temperature":21,"rainfall":55,"humidity":65,"yieldIndex":85},
+    {"month":"Jul","temperature":20,"rainfall":42,"humidity":62,"yieldIndex":80},
+    {"month":"Aug","temperature":21,"rainfall":48,"humidity":60,"yieldIndex":78},
+    {"month":"Sep","temperature":22,"rainfall":52,"humidity":58,"yieldIndex":75},
+    {"month":"Oct","temperature":24,"rainfall":95,"humidity":68,"yieldIndex":82},
+    {"month":"Nov","temperature":23,"rainfall":145,"humidity":75,"yieldIndex":90},
+    {"month":"Dec","temperature":23,"rainfall":85,"humidity":70,"yieldIndex":85}
+  ],
+  "yieldTrends": [
+    {"year":"2022","maize":3.8,"wheat":3.2,"tea":2.7,"coffee":0.85,"sugarcane":72},
+    {"year":"2023","maize":4.0,"wheat":3.4,"tea":2.8,"coffee":0.88,"sugarcane":75},
+    {"year":"2024","maize":4.2,"wheat":3.5,"tea":2.9,"coffee":0.92,"sugarcane":78},
+    {"year":"2025","maize":4.4,"wheat":3.7,"tea":3.0,"coffee":0.95,"sugarcane":80},
+    {"year":"2026","maize":4.6,"wheat":3.9,"tea":3.1,"coffee":0.98,"sugarcane":82}
+  ],
+  "cropDistribution": [
+    {"name":"Maize","value":32,"color":"#fbbf24"},
+    {"name":"Tea","value":18,"color":"#22c55e"},
+    {"name":"Coffee","value":12,"color":"#8b5cf6"},
+    {"name":"Wheat","value":10,"color":"#f59e0b"},
+    {"name":"Sugarcane","value":8,"color":"#10b981"},
+    {"name":"Beans","value":8,"color":"#ef4444"},
+    {"name":"Potatoes","value":7,"color":"#a855f7"},
+    {"name":"Others","value":5,"color":"#6b7280"}
+  ],
+  "radar": [
+    {"metric":"Temperature","current":82,"optimal":88},
+    {"metric":"Soil Moisture","current":78,"optimal":85},
+    {"metric":"Nutrients","current":88,"optimal":92},
+    {"metric":"Rainfall","current":75,"optimal":80},
+    {"metric":"pH Level","current":85,"optimal":90},
+    {"metric":"Sunlight","current":90,"optimal":88}
+  ],
+  "soil": [
+    {"depth":"0-15cm","moisture":72,"nitrogen":45,"phosphorus":38,"potassium":52},
+    {"depth":"15-30cm","moisture":68,"nitrogen":42,"phosphorus":35,"potassium":48},
+    {"depth":"30-45cm","moisture":65,"nitrogen":38,"phosphorus":32,"potassium":45},
+    {"depth":"45-60cm","moisture":62,"nitrogen":35,"phosphorus":28,"potassium":42}
+  ],
+  "models": [
+    {"model":"Random Forest","accuracy":92.5,"mae":0.32,"rmse":0.45,"crop":"Maize"},
+    {"model":"Gradient Boost","accuracy":94.2,"mae":0.28,"rmse":0.38,"crop":"Wheat"},
+    {"model":"CNN (Satellite)","accuracy":95.8,"mae":0.22,"rmse":0.32,"crop":"Tea"},
+    {"model":"Ensemble","accuracy":96.5,"mae":0.18,"rmse":0.25,"crop":"All Crops"}
+  ],
+  "stats": [
+    {"label":"Satellite Images","value":"1.8M","subtext":"Sentinel-2 & Landsat","icon":"◉"},
+    {"label":"Weather Records","value":"8.5TB","subtext":"KMD Data","icon":"☁"},
+    {"label":"Soil Sensors","value":"25K","subtext":"Across 47 Counties","icon":"⌁"},
+    {"label":"Farmers Served","value":"850K","subtext":"Smallholders","icon":"♧"}
+  ],
+  "alerts": {
+    "2026": [
+      {"type":"warning","message":"Drought conditions developing in Turkana and Marsabit counties","time":"1 hour ago"},
+      {"type":"success","message":"Optimal planting conditions for long rains in Central Kenya","time":"3 hours ago"},
+      {"type":"info","message":"New satellite imagery processed for Rift Valley region","time":"5 hours ago"},
+      {"type":"warning","message":"Fall Armyworm outbreak detected in Trans Nzoia maize fields","time":"8 hours ago"}
+    ],
+    "2025": [
+      {"type":"success","message":"Record maize harvest recorded in Trans Nzoia County","time":"Dec 2025"},
+      {"type":"info","message":"El Niño conditions affected short rains season","time":"Oct 2025"},
+      {"type":"warning","message":"Coffee leaf rust detected in Kiambu plantations","time":"Aug 2025"},
+      {"type":"success","message":"Tea exports reached 5-year high in Kericho region","time":"Jul 2025"}
+    ],
+    "2024": [
+      {"type":"warning","message":"La Niña caused below-average rainfall in Eastern Kenya","time":"Nov 2024"},
+      {"type":"success","message":"Wheat production increased 12% in Narok County","time":"Sep 2024"},
+      {"type":"info","message":"New irrigation schemes launched in Machakos","time":"Jun 2024"},
+      {"type":"success","message":"Avocado exports to EU market reached record levels","time":"Mar 2024"}
+    ],
+    "2023": [
+      {"type":"warning","message":"Severe drought affected pastoral counties","time":"Aug 2023"},
+      {"type":"info","message":"Digital soil mapping completed for 35 counties","time":"Jun 2023"},
+      {"type":"success","message":"Miraa exports increased significantly to Somalia","time":"Apr 2023"},
+      {"type":"warning","message":"Locust invasion in Northern Kenya controlled","time":"Feb 2023"}
+    ],
+    "2022": [
+      {"type":"warning","message":"Prolonged drought in ASAL regions affected livestock","time":"Oct 2022"},
+      {"type":"info","message":"Kenya AgriPredict platform launched nationwide","time":"Jul 2022"},
+      {"type":"success","message":"Potato production in Nyandarua exceeded targets","time":"May 2022"},
+      {"type":"warning","message":"Fertilizer prices increased due to global supply issues","time":"Mar 2022"}
+    ]
+  }
+}
